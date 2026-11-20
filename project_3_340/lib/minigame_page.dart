@@ -16,14 +16,13 @@ import 'game_files/game.dart';
 import 'shop.dart';
 import 'main.dart';
 
-void main() async {
-  WidgetsFlutterBinding.ensureInitialized();
-  await Flame.device.fullScreen();
-
-  // runApp(
-  //   ChangeNotifierProvider(create: (_) => GameProvider(), child: MainApp()),
-  // );
-}
+// void main() async {
+//   WidgetsFlutterBinding.ensureInitialized();
+//   await Flame.device.fullScreen();
+//   // runApp(
+//   //   ChangeNotifierProvider(create: (_) => GameProvider(), child: MainApp()),
+//   // );
+// }
 
 class MinigamePage extends StatefulWidget {
   const MinigamePage({super.key});
@@ -41,6 +40,15 @@ class _MinigamePageState extends State<MinigamePage> {
 
     return GameWidget(
       game: game,
+      errorBuilder: (context, error) {
+        debugPrint('here is the error: $error');
+        return Center(
+          child: Text(
+            'Game failed to load: $error',
+            style: const TextStyle(color: Colors.red),
+          ),
+        );
+      },
       overlayBuilderMap: {
         "title": (context, game) => OverlayTitle(game: game),
         "main": (context, game) => mainOverlay(context, game),

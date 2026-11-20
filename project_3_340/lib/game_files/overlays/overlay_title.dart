@@ -40,6 +40,11 @@ class OverlayTitle extends StatelessWidget {
                 style: TextStyle(color: Colors.black, fontSize: 24, height: 1),
               ),
               const SizedBox(height: 20),
+              Text(
+                "High Score: ${game.gameProvider.highScore} coins",
+                textAlign: TextAlign.center,
+                style: TextStyle(color: Colors.black, fontSize: 16, height: 1),
+              ),
               ElevatedButton(
                 onPressed: () {
                   // TODO: Start game

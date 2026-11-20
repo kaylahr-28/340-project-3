@@ -9,7 +9,7 @@ class GameProvider extends ChangeNotifier {
   double _musicVolume = 1.0;
   double _sfxVolume = 1.0;
   int _score = 0;
-  int _lastScore = 0;
+  int _highScore = 0;
   bool _inGame = false;
   FlameGame? _game;
 
@@ -17,9 +17,13 @@ class GameProvider extends ChangeNotifier {
   double get musicVolume => _musicVolume;
   double get sfxVolume => _sfxVolume;
   int get score => _score;
-  int get lastScore => _lastScore;
+  int get highScore => _highScore;
   bool get inGame => _inGame;
   FlameGame? get game => _game;
+
+  set game(FlameGame? value) {
+    _game = value;
+  }
 
   // Setters with notifyListeners
   void setMusicVolume(double value) {
@@ -44,8 +48,10 @@ class GameProvider extends ChangeNotifier {
     });
   }
 
+  //adds to total coins and also updates highscore
   void addToTotalCoins() {
     totalCoins += _score;
+    if (_score > _highScore) _highScore = _score;
     WidgetsBinding.instance.addPostFrameCallback((_) {
       notifyListeners();
     });
@@ -56,10 +62,6 @@ class GameProvider extends ChangeNotifier {
     WidgetsBinding.instance.addPostFrameCallback((_) {
       notifyListeners();
     });
-  }
-
-  set game(FlameGame? value) {
-    _game = value;
   }
 
   //play bg music (auto loops)

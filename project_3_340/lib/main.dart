@@ -19,9 +19,14 @@ import 'shop.dart';
 //     ),
 //   );
 // }
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+
+  //await Flame.device.fullScreen();
+
   runApp(
     ChangeNotifierProvider(create: (_) => GameProvider(), child: MainApp()),
+    //MainApp(),
   );
 }
 
@@ -36,14 +41,14 @@ class MainApp extends StatefulWidget {
 class _MainAppState extends State<MainApp> {
   int _currentNavScreen = 1;
   final List<Widget> _bottomNavScreens = [
-    MinigamePage(),
-    HomePage(),
-    ShopPage(),
+    const MinigamePage(),
+    const HomePage(),
+    const ShopPage(),
   ];
 
   @override
   Widget build(BuildContext context) {
-    final gameProvider = context.read<GameProvider>();
+    // late final gameProvider = context.read<GameProvider>();
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       home: Scaffold(
@@ -64,15 +69,18 @@ class _MainAppState extends State<MainApp> {
           ],
           onTap: (value) {
             // final gameProvider = context.read<GameProvider>();
-
+            final gameProvider = context.read<GameProvider>();
+            gameProvider.game?.paused = true;
+            //only add pause if game has previously been started (ie not on start)
+            if (gameProvider.game != null) {
+              if (!gameProvider.game!.overlays.isActive('title')) {
+                gameProvider.game?.overlays.add('pause');
+              } else {
+                gameProvider.game?.overlays.add('title');
+              }
+            }
             setState(() {
               _currentNavScreen = value;
-              gameProvider.game?.paused = true;
-              //only add pause if game has previously been started (ie not on start)
-              if (gameProvider.game != null &&
-                  !gameProvider.game!.overlays.isActive('title')) {
-                gameProvider.game?.overlays.add('pause');
-              }
             });
           },
         ),

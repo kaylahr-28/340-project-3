@@ -65,6 +65,10 @@ class Bloot extends SpriteComponent
     }
   }
 
+  void restartGame() {
+    position = Vector2(game.size.x / 2, game.size.y - 75);
+  }
+
   //
   // update
   // moves the asteroid and bounces it off the walls

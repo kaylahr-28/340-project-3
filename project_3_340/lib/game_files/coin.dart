@@ -19,7 +19,7 @@ import 'game_provider.dart';
 ///
 
 class Coin extends SpriteComponent
-    with HasGameReference<BlootMinigame>, CollisionCallbacks {
+    with HasGameReference<BlootMinigame>, CollisionCallbacks, HasVisibility {
   //late Vector2 velocity;
 
   // All asteroids are the same size
@@ -50,13 +50,26 @@ class Coin extends SpriteComponent
   void onCollision(Set<Vector2> intersectionPoints, PositionComponent other) {
     super.onCollision(intersectionPoints, other);
 
-    if (other is Bloot) {
+    if (other is Bloot && isVisible) {
+      //remove from view
+      isVisible = false;
+      //new pos
       position = Vector2(
         Random().nextDouble() * game.size.x,
         Random().nextDouble() * game.size.y,
       );
+      //add to score
       game.gameProvider.incrementScore(1);
+      //call function from game.dart
+      game.resetCoins();
     }
+  }
+
+  void restartGame() {
+    position = Vector2(
+      Random().nextDouble() * game.size.x,
+      Random().nextDouble() * game.size.y,
+    );
   }
 
   //

@@ -39,6 +39,8 @@ class BlootMinigame extends FlameGame
 
   BlootMinigame(this.context);
   late Bloot bloot;
+  final List<Asteroid> asteroids = [];
+  final List<Coin> coins = [];
 
   @override
   Color backgroundColor() => const Color.fromARGB(249, 120, 86, 233);
@@ -79,16 +81,36 @@ class BlootMinigame extends FlameGame
 
     await images.loadAll(["asteroid.png", 'coin.png', 'bloot.png']);
 
-    for (int i = 0; i < 10; i++) {
-      add(Asteroid());
-    }
+    asteroids.addAll([for (int i = 0; i < 10; i++) Asteroid()]);
 
-    for (int i = 0; i < 5; i++) {
-      add(Coin());
-    }
+    coins.addAll([for (int i = 0; i < 5; i++) Coin()]);
 
     bloot = Bloot();
     add(bloot);
+
+    addAll(asteroids);
+    addAll(coins);
+  }
+
+  void restartGame() {
+    //reset pos and velocity
+    for (Asteroid a in asteroids) {
+      a.restartGame();
+    }
+    //reset pos
+    bloot.restartGame();
+  }
+
+  //called whenever a coin is collected
+  void resetCoins() {
+    //if any coins are still visible, exit
+    for (Coin c in coins) {
+      if (c.isVisible) return;
+    }
+    //otherwise, make all coins visible again
+    for (Coin c in coins) {
+      c.isVisible = true;
+    }
   }
 
   @override

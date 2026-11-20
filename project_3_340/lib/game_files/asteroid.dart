@@ -29,7 +29,7 @@ class Asteroid extends SpriteComponent
     anchor = Anchor.center;
     position = Vector2(
       Random().nextDouble() * game.size.x,
-      Random().nextDouble() * game.size.y,
+      Random().nextDouble() * game.size.y - 100,
     );
     size = Vector2(asteroidSize, asteroidSize);
     velocity = Vector2(
@@ -57,6 +57,19 @@ class Asteroid extends SpriteComponent
         other.velocity += normal * impulse;
       }
     }
+  }
+
+  //set new position and velocities
+  void restartGame() {
+    position = Vector2(
+      Random().nextDouble() * game.size.x,
+      Random().nextDouble() * game.size.y - 100,
+    );
+
+    velocity = Vector2(
+      Random().nextDouble() * 100,
+      Random().nextDouble() * 100,
+    );
   }
 
   //
