@@ -5,6 +5,8 @@ import 'package:flame/game.dart';
 import 'package:flutter/material.dart';
 
 import 'asteroid.dart';
+import 'coin.dart';
+import 'bloot.dart';
 
 import 'package:flame_audio/flame_audio.dart';
 import 'package:provider/provider.dart';
@@ -24,14 +26,19 @@ import 'game_provider.dart';
 /// - the game uses TapCallbacks to handle tap events. Nothing happens yet.
 ///
 
-class OverlayTutorial extends FlameGame
-    with TapCallbacks, HasCollisionDetection, WidgetsBindingObserver {
+class BlootMinigame extends FlameGame
+    with
+        TapCallbacks,
+        HasCollisionDetection,
+        WidgetsBindingObserver,
+        PanDetector {
   final BuildContext context;
   //late: gets val after constructor loads (in onLoad)
   //final: cant change after that
   late final GameProvider gameProvider;
 
-  OverlayTutorial(this.context);
+  BlootMinigame(this.context);
+  late Bloot bloot;
 
   @override
   Color backgroundColor() => const Color.fromARGB(249, 120, 86, 233);
@@ -70,20 +77,32 @@ class OverlayTutorial extends FlameGame
     await FlameAudio.audioCache.loadAll(['retro_bgm.wav', 'shot.wav']);
     gameProvider.playBgm('retro_bgm.wav');
 
-    await images.loadAll(["asteroid.png"]);
+    await images.loadAll(["asteroid.png", 'coin.png', 'bloot.png']);
 
     for (int i = 0; i < 10; i++) {
       add(Asteroid());
     }
+
+    for (int i = 0; i < 5; i++) {
+      add(Coin());
+    }
+
+    bloot = Bloot();
+    add(bloot);
   }
 
   @override
   void onTapUp(TapUpEvent event) {
     super.onTapUp(event);
     //increment score
-    gameProvider.incrementScore(1);
+    // gameProvider.incrementScore(1);
 
     //play sound effect
-    gameProvider.playSfx('shot.wav');
+    // gameProvider.playSfx('shot.wav');
+  }
+
+  @override
+  void onPanUpdate(DragUpdateInfo info) {
+    bloot.move(info.delta.global);
   }
 }

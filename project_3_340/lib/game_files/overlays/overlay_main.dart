@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'game_provider.dart';
+import '../game_provider.dart';
 
 import 'package:provider/provider.dart';
 

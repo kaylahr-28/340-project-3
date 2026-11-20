@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flame_audio/flame_audio.dart';
 import 'package:flame/game.dart';
 
+import '../globals.dart';
+
 class GameProvider extends ChangeNotifier {
   // Private variables for settings
   double _musicVolume = 1.0;
@@ -23,22 +25,31 @@ class GameProvider extends ChangeNotifier {
   void setMusicVolume(double value) {
     _musicVolume = value;
     FlameAudio.bgm.audioPlayer.setVolume(value);
-    notifyListeners();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      notifyListeners();
+    });
   }
 
   void setSfxVolume(double value) {
     _sfxVolume = value;
-    notifyListeners();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      notifyListeners();
+    });
   }
 
   void incrementScore(int value) {
     _score += value;
-    notifyListeners();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      notifyListeners();
+    });
   }
 
-  void setLastScore(int value) {
-    _lastScore = value;
-    notifyListeners();
+  void addToTotalCoins() {
+    totalCoins += _score;
+    _score = 0;
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      notifyListeners();
+    });
   }
 
   set game(FlameGame? value) {

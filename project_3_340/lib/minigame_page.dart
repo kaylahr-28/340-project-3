@@ -3,27 +3,26 @@ import 'package:flame/game.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import 'game_provider.dart';
+import 'game_files/game_provider.dart';
 
-import 'overlay_info.dart';
-import 'overlay_main.dart';
-import 'overlay_pause.dart';
-import 'overlay_settings.dart';
-import 'overlay_title.dart';
-import 'highscores_page.dart';
+import 'game_files/overlays/overlay_end.dart';
+import 'game_files/overlays/overlay_main.dart';
+import 'game_files/overlays/overlay_pause.dart';
+import 'game_files/overlays/overlay_settings.dart';
+import 'game_files/overlays/overlay_title.dart';
+//import 'highscores_page.dart';
 
-import 'game.dart';
+import 'game_files/game.dart';
+import 'shop.dart';
+import 'main.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Flame.device.fullScreen();
 
-  runApp(
-    ChangeNotifierProvider(
-      create: (context) => GameProvider(),
-      child: const MainApp(),
-    ),
-  );
+  // runApp(
+  //   ChangeNotifierProvider(create: (_) => GameProvider(), child: MainApp()),
+  // );
 }
 
 class MinigamePage extends StatefulWidget {
@@ -34,50 +33,10 @@ class MinigamePage extends StatefulWidget {
 }
 
 class _MinigamePageState extends State<MinigamePage> {
-  int _currentNavScreen = 0;
-  final List<Widget> _bottomNavScreens = [MainGame(), HighscoresPage()];
-
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      home: Scaffold(
-        appBar: AppBar(title: Text('Cool Space Game!!')),
-        //body: _bottomNavScreens[_currentNavScreen]
-        body: IndexedStack(
-          index: _currentNavScreen,
-          children: _bottomNavScreens,
-        ),
-        bottomNavigationBar: BottomNavigationBar(
-          items: [
-            BottomNavigationBarItem(icon: Icon(Icons.home), label: "Game"),
-            BottomNavigationBarItem(
-              icon: Icon(Icons.scoreboard),
-              label: "High Scores",
-            ),
-          ],
-          onTap: (value) {
-            final gameProvider = context.read<GameProvider>();
-
-            setState(() {
-              _currentNavScreen = value;
-              gameProvider.game?.paused = true;
-              gameProvider.game?.overlays.add('pause');
-            });
-          },
-        ),
-      ),
-    );
-  }
-}
-
-class MainGame extends StatelessWidget {
-  const MainGame({super.key});
-
   @override
   Widget build(BuildContext context) {
     final gameProvider = context.read<GameProvider>();
-    final game = OverlayTutorial(context)..paused = true;
+    final game = BlootMinigame(context)..paused = true;
     gameProvider.game = game;
 
     return GameWidget(
@@ -86,7 +45,8 @@ class MainGame extends StatelessWidget {
         "title": (context, game) => OverlayTitle(game: game),
         "main": (context, game) => mainOverlay(context, game),
         'pause': (context, game) => pauseOverlay(context, game),
-        'info': (context, game) => InfoOverlay(game: game as OverlayTutorial),
+        'gameOver': (context, game) =>
+            GameOverOverlay(game: game as BlootMinigame),
         'settings': (context, game) => settingsOverlay(context, game),
       },
       initialActiveOverlays: ['title'],

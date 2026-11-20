@@ -3,6 +3,12 @@ import 'dart:math';
 
 import 'package:flame/components.dart';
 import 'package:flame/collisions.dart';
+import 'package:project_3_340/game_files/game.dart';
+
+import 'asteroid.dart';
+import 'bloot.dart';
+
+import 'game_provider.dart';
 
 ///
 /// Asteroid Sprite
@@ -12,12 +18,12 @@ import 'package:flame/collisions.dart';
 /// The update method ensures the asteroid stays on screen and bounces off the walls.
 ///
 
-class Asteroid extends SpriteComponent
-    with HasGameReference, CollisionCallbacks {
-  late Vector2 velocity;
+class Coin extends SpriteComponent
+    with HasGameReference<BlootMinigame>, CollisionCallbacks {
+  //late Vector2 velocity;
 
   // All asteroids are the same size
-  static const double asteroidSize = 50.0;
+  static const double coinSize = 25.0;
 
   //
   // onLoad
@@ -25,38 +31,31 @@ class Asteroid extends SpriteComponent
   //
   @override
   Future<void> onLoad() async {
-    sprite = Sprite(game.images.fromCache('asteroid.png'));
+    sprite = Sprite(game.images.fromCache('coin.png'));
     anchor = Anchor.center;
     position = Vector2(
       Random().nextDouble() * game.size.x,
       Random().nextDouble() * game.size.y,
     );
-    size = Vector2(asteroidSize, asteroidSize);
-    velocity = Vector2(
-      Random().nextDouble() * 200,
-      Random().nextDouble() * 200,
-    );
+    size = Vector2(coinSize, coinSize);
+    // velocity = Vector2(
+    //   Random().nextDouble() * 100,
+    //   Random().nextDouble() * 100,
+    // );
 
     add(CircleHitbox());
   }
 
   @override
   void onCollision(Set<Vector2> intersectionPoints, PositionComponent other) {
-    // TODO: implement onCollision
     super.onCollision(intersectionPoints, other);
 
-    if (other is Asteroid) {
-      final normal = (other.position - position).normalized();
-
-      //calculate relative velocity
-      final relativeVelocity = velocity - other.velocity;
-
-      final impulse = relativeVelocity.dot(normal);
-
-      if (impulse > 0) {
-        velocity -= normal * impulse;
-        other.velocity += normal * impulse;
-      }
+    if (other is Bloot) {
+      position = Vector2(
+        Random().nextDouble() * game.size.x,
+        Random().nextDouble() * game.size.y,
+      );
+      game.gameProvider.incrementScore(1);
     }
   }
 
@@ -67,12 +66,12 @@ class Asteroid extends SpriteComponent
   @override
   void update(double dt) {
     super.update(dt);
-    position += velocity * dt;
-    if (position.y < 0 || position.y > game.size.y) {
-      velocity = Vector2(velocity.x, -velocity.y);
-    }
-    if (position.x < 0 || position.x > game.size.x) {
-      velocity = Vector2(-velocity.x, velocity.y);
-    }
+    // position += velocity * dt;
+    // if (position.y < 0 || position.y > game.size.y) {
+    //   velocity = Vector2(velocity.x, -velocity.y);
+    // }
+    // if (position.x < 0 || position.x > game.size.x) {
+    //   velocity = Vector2(-velocity.x, velocity.y);
+    // }
   }
 }
