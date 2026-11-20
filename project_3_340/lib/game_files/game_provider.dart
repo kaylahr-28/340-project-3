@@ -46,6 +46,12 @@ class GameProvider extends ChangeNotifier {
 
   void addToTotalCoins() {
     totalCoins += _score;
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      notifyListeners();
+    });
+  }
+
+  void restartGame() {
     _score = 0;
     WidgetsBinding.instance.addPostFrameCallback((_) {
       notifyListeners();

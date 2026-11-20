@@ -45,8 +45,7 @@ class _MinigamePageState extends State<MinigamePage> {
         "title": (context, game) => OverlayTitle(game: game),
         "main": (context, game) => mainOverlay(context, game),
         'pause': (context, game) => pauseOverlay(context, game),
-        'gameOver': (context, game) =>
-            GameOverOverlay(game: game as BlootMinigame),
+        'gameOver': (context, game) => GameOverOverlay(game: game),
         'settings': (context, game) => settingsOverlay(context, game),
       },
       initialActiveOverlays: ['title'],
