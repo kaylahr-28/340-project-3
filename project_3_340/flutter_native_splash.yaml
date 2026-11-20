@@ -1,0 +1,11 @@
+flutter_native_splash:
+  # Bloot blue background for all platforms
+  color: "#5fcde4"
+
+  # Bloot Life logo in center
+  image: assets/images/blootlifesplash.png
+
+  # Android 12+ specific settings (same as above, but explicit)
+  android_12:
+    color: "#5fcde4"  # Bloot blue
+    image: assets/images/blootlifesplash.png

@@ -53,7 +53,7 @@ class _MainAppState extends State<MainApp> {
       theme: ThemeData(fontFamily: 'Etna'),
       debugShowCheckedModeBanner: false,
       home: Scaffold(
-        appBar: AppBar(title: Text('Cool Space Game!!')),
+        appBar: AppBar(title: Text('Bloot Life')),
         //body: _bottomNavScreens[_currentNavScreen]
         body: IndexedStack(
           index: _currentNavScreen,
@@ -108,8 +108,8 @@ class _HomePageState extends State<HomePage> {
           Text("Main Page Bloot"),
           Image(
             image: AssetImage('assets/images/bloot.png'),
-            width: 200,
-            height: 200,
+            width: 500,
+            height: 500,
           ),
         ],
       ),
