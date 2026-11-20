@@ -50,6 +50,7 @@ class _MainAppState extends State<MainApp> {
   Widget build(BuildContext context) {
     // late final gameProvider = context.read<GameProvider>();
     return MaterialApp(
+      theme: ThemeData(fontFamily: 'Etna'),
       debugShowCheckedModeBanner: false,
       home: Scaffold(
         appBar: AppBar(title: Text('Cool Space Game!!')),
