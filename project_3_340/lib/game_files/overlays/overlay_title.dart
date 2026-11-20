@@ -48,6 +48,7 @@ class OverlayTitle extends StatelessWidget {
               ElevatedButton(
                 onPressed: () {
                   // TODO: Start game
+                  game.restartGame();
                   game.paused = false;
                   game.overlays.remove('title');
                   game.overlays.add('main');
@@ -59,6 +60,9 @@ class OverlayTitle extends StatelessWidget {
                 onPressed: () {
                   // TODO: Settings
                   game.overlays.remove('title');
+                  if (game.overlays.isActive('gameOver')) {
+                    game.overlays.remove('gameOver');
+                  }
                   game.overlays.add('settings');
                   game.overlays.add('main');
                 },

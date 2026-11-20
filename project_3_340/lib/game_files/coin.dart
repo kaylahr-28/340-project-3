@@ -70,6 +70,7 @@ class Coin extends SpriteComponent
       Random().nextDouble() * game.size.x,
       Random().nextDouble() * game.size.y,
     );
+    isVisible = true;
   }
 
   //

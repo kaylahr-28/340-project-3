@@ -16,13 +16,13 @@ import 'game_files/game.dart';
 import 'shop.dart';
 import 'main.dart';
 
-// void main() async {
-//   WidgetsFlutterBinding.ensureInitialized();
-//   await Flame.device.fullScreen();
-//   // runApp(
-//   //   ChangeNotifierProvider(create: (_) => GameProvider(), child: MainApp()),
-//   // );
-// }
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Flame.device.fullScreen();
+  //   // runApp(
+  //   //   ChangeNotifierProvider(create: (_) => GameProvider(), child: MainApp()),
+  // );
+}
 
 class MinigamePage extends StatefulWidget {
   const MinigamePage({super.key});

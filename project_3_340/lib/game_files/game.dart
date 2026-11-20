@@ -97,6 +97,9 @@ class BlootMinigame extends FlameGame
     for (Asteroid a in asteroids) {
       a.restartGame();
     }
+    for (Coin c in coins) {
+      c.restartGame();
+    }
     //reset pos
     bloot.restartGame();
   }

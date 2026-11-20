@@ -73,10 +73,12 @@ class _MainAppState extends State<MainApp> {
             gameProvider.game?.paused = true;
             //only add pause if game has previously been started (ie not on start)
             if (gameProvider.game != null) {
-              if (!gameProvider.game!.overlays.isActive('title')) {
+              if (!gameProvider.game!.overlays.isActive('title') &&
+                  !gameProvider.game!.overlays.isActive('gameOver')) {
                 gameProvider.game?.overlays.add('pause');
               } else {
                 gameProvider.game?.overlays.add('title');
+                gameProvider.game?.overlays.remove('gameOver');
               }
             }
             setState(() {

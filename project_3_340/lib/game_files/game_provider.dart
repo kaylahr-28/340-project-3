@@ -59,6 +59,7 @@ class GameProvider extends ChangeNotifier {
 
   void restartGame() {
     _score = 0;
+
     WidgetsBinding.instance.addPostFrameCallback((_) {
       notifyListeners();
     });

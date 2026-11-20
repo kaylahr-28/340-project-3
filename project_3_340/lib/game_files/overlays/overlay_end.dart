@@ -14,8 +14,6 @@ import '../game.dart';
 
 class GameOverOverlay extends StatefulWidget {
   final game;
-  //final ;
-
   const GameOverOverlay({super.key, required this.game});
 
   @override
@@ -53,8 +51,9 @@ class _GameOverOverlayState extends State<GameOverOverlay> {
             ),
             ElevatedButton(
               onPressed: () {
-                // TODO: Start game
+                // restart game
                 gameProvider.restartGame();
+                (gameProvider.game as BlootMinigame?)?.restartGame();
                 gameProvider.game?.paused = false;
                 gameProvider.game?.overlays.remove('gameOver');
                 gameProvider.game?.overlays.add('main');
